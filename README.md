@@ -1,14 +1,14 @@
-# Загрузка системы
+# Домашнее задание, написать свою реализацию ps ax используя анализ /proc
 
 ## Введение
 
-Копируем Vagrantfile, access.log, logreport.sh в директорию на компьютере.
+Копируем Vagrantfile, psax.sh в директорию на компьютере.
 
 ## Запуск тестового окружения
 
 Открываем консоль, перейдим в директорию с проектом и выполнить `vagrant up`
 ```shell
-cd otus-hw8
+cd otus-hw9
 vagrant up
 ```
 
@@ -24,13 +24,7 @@ cd /vagrant
 ## Запускаем скрип logreport.sh
 
 ```shell
-./logreport.sh
-```
-
-## Запуск созданного отчета
-
-```shell
-cat report.log
+bash psax.sh
 ```
 
 # Вывод
@@ -38,183 +32,87 @@ cat report.log
 <p>
 
 ```log
-[root@bash vagrant]# cat report.log
-Дата отчета с 14/Aug/2019:04:12:10 по 15/Aug/2019:00:25:46
-
-5 IP адресов с наибольшим количеством запросов:
-45 запросов с IP адреса: 93.158.167.130
-39 запросов с IP адреса: 109.236.252.130
-37 запросов с IP адреса: 212.57.117.19
-33 запросов с IP адреса: 188.43.241.106
-31 запросов с IP адреса: 87.250.233.68
-24 запросов с IP адреса: 62.75.198.172
-22 запросов с IP адреса: 148.251.223.21
-20 запросов с IP адреса: 185.6.8.9
-17 запросов с IP адреса: 217.118.66.161
-16 запросов с IP адреса: 95.165.18.146
-12 запросов с IP адреса: 95.108.181.93
-12 запросов с IP адреса: 62.210.252.196
-12 запросов с IP адреса: 185.142.236.35
-12 запросов с IP адреса: 162.243.13.195
-8 запросов с IP адреса: 163.179.32.118
-
-15 URL с наибольшим количеством запросов:
-157 запросов на: /
-120 запросов на: /wp-login.php
-57 запросов на: /xmlrpc.php
-26 запросов на: /robots.txt
-12 запросов на: /favicon.ico
-11 запросов на: 400
-9 запросов на: /wp-includes/js/wp-embed.min.js?ver=5.0.4
-7 запросов на: /wp-admin/admin-post.php?page=301bulkoptions
-7 запросов на: /1
-6 запросов на: /wp-content/uploads/2016/10/robo5.jpg
-6 запросов на: /wp-content/uploads/2016/10/robo4.jpg
-6 запросов на: /wp-content/uploads/2016/10/robo3.jpg
-6 запросов на: /wp-content/uploads/2016/10/robo2.jpg
-6 запросов на: /wp-content/uploads/2016/10/robo1.jpg
-6 запросов на: /wp-content/uploads/2016/10/aoc-1.jpg
-
-Все ошибки:
-51 кодов ошибки: 404
-7 кодов ошибки: 400
-3 кодов ошибки: 500
-2 кодов ошибки: 499
-
-Список всех кодов возврата:
-498 кодов возврата: 200
-95 кодов возврата: 301
-51 кодов возврата: 404
-11 кодов возврата: "-"
-7 кодов возврата: 400
-3 кодов возврата: 500
-2 кодов возврата: 499
-```
-</p>
-</details>
-
-## Проверка того, что отчет делается с даты последнего запуска скрипта
-
-# Если скрип запускался ранее, необходимо удалить endtime.log
-
-```shell
-rm /vagrant/endtime.log
-```
-
-# Разделим access.log на два файла с разной датой
-
-```shell
-sed -e '1,659 d' access.log >> access2.log
-sed -i '660,700 d' access.log 
-```
-# Запускаем скрип logreport.sh
-
-```shell
-./logreport.sh
-```
-# Вывод отчета с 14/Aug/2019:04:12:10 по 14/Aug/2019:23:50:27
-
-```shell
-cat report.log
-```
-
-<details><summary>Пример вывода</summary>
-<p>
-
-```log
-Дата отчета с 14/Aug/2019:04:12:10 по 14/Aug/2019:23:50:27
-
-5 IP адресов с наибольшим количеством запросов:
-45 запросов с IP адреса: 93.158.167.130
-39 запросов с IP адреса: 109.236.252.130
-37 запросов с IP адреса: 212.57.117.19
-33 запросов с IP адреса: 188.43.241.106
-30 запросов с IP адреса: 87.250.233.68
-23 запросов с IP адреса: 62.75.198.172
-22 запросов с IP адреса: 148.251.223.21
-20 запросов с IP адреса: 185.6.8.9
-17 запросов с IP адреса: 217.118.66.161
-16 запросов с IP адреса: 95.165.18.146
-12 запросов с IP адреса: 95.108.181.93
-12 запросов с IP адреса: 62.210.252.196
-12 запросов с IP адреса: 185.142.236.35
-12 запросов с IP адреса: 162.243.13.195
-8 запросов с IP адреса: 163.179.32.118
-
-15 URL с наибольшим количеством запросов:
-153 запросов на: /
-118 запросов на: /wp-login.php
-56 запросов на: /xmlrpc.php
-25 запросов на: /robots.txt
-12 запросов на: /favicon.ico
-11 запросов на: 400
-9 запросов на: /wp-includes/js/wp-embed.min.js?ver=5.0.4
-7 запросов на: /wp-admin/admin-post.php?page=301bulkoptions
-7 запросов на: /1
-6 запросов на: /wp-content/uploads/2016/10/robo5.jpg
-6 запросов на: /wp-content/uploads/2016/10/robo4.jpg
-6 запросов на: /wp-content/uploads/2016/10/robo3.jpg
-6 запросов на: /wp-content/uploads/2016/10/robo2.jpg
-6 запросов на: /wp-content/uploads/2016/10/robo1.jpg
-6 запросов на: /wp-content/uploads/2016/10/aoc-1.jpg
-
-Все ошибки:
-49 кодов ошибки: 404
-7 кодов ошибки: 400
-3 кодов ошибки: 500
-2 кодов ошибки: 499
-
-Список всех кодов возврата:
-490 кодов возврата: 200
-95 кодов возврата: 301
-49 кодов возврата: 404
-11 кодов возврата: "-"
-7 кодов возврата: 400
-3 кодов возврата: 500
-2 кодов возврата: 499
-```
-</p>
-</details>
-
-# Добавим в access.log информацию из access2.log 
-
-```shell
-cat access2.log >> access.log
-```
-
-# Выполним скрипт
-
-```shell
-./logreport.sh
-```
-
-# Вывод отчета  с последней даты запуска скрипта 14/Aug/2019:23:50:27 по 15/Aug/2019:00:25:46
-
-```shell
-cat report.log
-```
-
-<details><summary>Пример вывода</summary>
-<p>
-
-```log
-Дата отчета с 14/Aug/2019:23:50:27 по 15/Aug/2019:00:25:46
-
-5 IP адресов с наибольшим количеством запросов:
-3 запросов с IP адреса: 137.74.1.112
-2 запросов с IP адреса: 182.254.243.249
-
-15 URL с наибольшим количеством запросов:
-4 запросов на: /
-2 запросов на: /xmlrpc.php
-2 запросов на: /wp-login.php
-
-Все ошибки:
-2 кодов ошибки: 404
-
-Список всех кодов возврата:
-9 кодов возврата: 200
-2 кодов возврата: 404
+[vagrant@bash vagrant]$ bash psax.sh
+PID     TTY     STAT            NICE    TIME            COMMAND
+1       0       S (sleeping)    0       00:00:11        /usr/lib/systemd/systemd --switched-root --system --deserialize 21
+2       0       S (sleeping)    0       00:00:00
+4       0       S (sleeping)    -20     00:00:00
+5       0       S (sleeping)    0       00:00:00
+6       0       S (sleeping)    0       00:00:00
+7       0       S (sleeping)    0       00:00:00
+8       0       S (sleeping)    0       00:00:00
+9       0       R (running)     0       00:00:00
+10      0       S (sleeping)    -20     00:00:00
+11      0       S (sleeping)    0       00:00:00
+13      0       S (sleeping)    0       00:00:00
+14      0       S (sleeping)    -20     00:00:00
+15      0       S (sleeping)    0       00:00:00
+16      0       S (sleeping)    -20     00:00:00
+17      0       S (sleeping)    -20     00:00:00
+18      0       S (sleeping)    -20     00:00:00
+19      0       S (sleeping)    -20     00:00:00
+20      0       S (sleeping)    -20     00:00:00
+21      0       S (sleeping)    -20     00:00:00
+22      0       S (sleeping)    -20     00:00:00
+23      0       S (sleeping)    -20     00:00:00
+24      0       S (sleeping)    -20     00:00:00
+26      0       S (sleeping)    0       00:00:00
+33      0       S (sleeping)    0       00:00:00
+34      0       S (sleeping)    5       00:00:00
+35      0       S (sleeping)    -20     00:00:00
+43      0       S (sleeping)    -20     00:00:00
+44      0       S (sleeping)    -20     00:00:00
+45      0       S (sleeping)    -20     00:00:00
+46      0       S (sleeping)    -20     00:00:00
+48      0       S (sleeping)    -20     00:00:00
+61      0       S (sleeping)    -20     00:00:00
+95      0       S (sleeping)    0       00:00:00
+124     0       S (sleeping)    -20     00:00:00
+127     0       S (sleeping)    0       00:00:00
+129     0       S (sleeping)    -20     00:00:00
+132     0       S (sleeping)    0       00:00:00
+133     0       S (sleeping)    -20     00:00:00
+154     0       S (sleeping)    -20     00:00:00
+155     0       S (sleeping)    -20     00:00:00
+156     0       S (sleeping)    -20     00:00:00
+157     0       S (sleeping)    -20     00:00:00
+158     0       S (sleeping)    -20     00:00:00
+159     0       S (sleeping)    -20     00:00:00
+160     0       S (sleeping)    -20     00:00:00
+161     0       S (sleeping)    -20     00:00:00
+162     0       S (sleeping)    -20     00:00:00
+163     0       S (sleeping)    -20     00:00:00
+164     0       S (sleeping)    0       00:00:00
+165     0       S (sleeping)    -20     00:00:00
+227     0       S (sleeping)    0       00:00:00        /usr/lib/systemd/systemd-journald
+260     0       S (sleeping)    0       00:00:02        /usr/lib/systemd/systemd-udevd
+280     0       S (sleeping)    -4      00:00:00        /sbin/auditd
+286     0       S (sleeping)    -20     00:00:00
+287     0       S (sleeping)    -20     00:00:00
+328     0       S (sleeping)    0       00:00:00        /usr/lib/polkit-1/polkitd --no-debug
+332     0       S (sleeping)    0       00:00:00        /usr/lib/systemd/systemd-logind
+335     0       S (sleeping)    0       00:00:00        /usr/bin/dbus-daemon --system --address=systemd: --nofork --nopidfile --systemd-activation
+346     0       S (sleeping)    0       00:00:00        /usr/sbin/chronyd
+349     0       S (sleeping)    0       00:00:00        /sbin/rpcbind -w
+351     0       S (sleeping)    0       00:00:00        /usr/sbin/gssproxy -D
+385     0       S (sleeping)    0       00:00:00        /usr/sbin/crond -n
+386     1025    S (sleeping)    0       00:00:00        /sbin/agetty --noclear tty1 linux
+575     0       S (sleeping)    0       00:00:00        /usr/bin/python2 -Es /usr/sbin/tuned -l -P
+577     0       S (sleeping)    0       00:00:13        /usr/sbin/sshd -D -u0
+578     0       S (sleeping)    0       00:00:00        /usr/sbin/rsyslogd -n
+807     0       S (sleeping)    0       00:00:00        /usr/libexec/postfix/master -w
+811     0       S (sleeping)    0       00:00:00        qmgr -l -t unix -u
+2306    0       S (sleeping)    0       00:00:00        /usr/sbin/NetworkManager --no-daemon
+2325    0       S (sleeping)    0       00:00:00        /sbin/dhclient -d -q -sf /usr/libexec/nm-dhcp-helper -pf /var/run/dhclient-eth0.pid -lf /var/lib/NetworkManager/dhclient-5fb06bd0-0bb0-7ffb-45f1-d6edd65f3e03-eth0.lease -cf /var/lib/NetworkManager/dhclient-eth0.conf eth0
+3245    0       S (sleeping)    0       00:00:00        sshd: vagrant [priv]
+3248    0       S (sleeping)    0       00:00:00        sshd: vagrant@pts/0
+3249    34816   S (sleeping)    0       00:00:02        -bash
+5407    0       S (sleeping)    0       00:00:00
+8397    0       S (sleeping)    0       00:00:00
+9966    34816   S (sleeping)    0       00:00:00        bash psax.sh
+25491   0       S (sleeping)    0       00:00:00
+25492   0       S (sleeping)    0       00:00:00        pickup -l -t unix -u
+uptime: 0:02:08:27
 ```
 </p>
 </details>
